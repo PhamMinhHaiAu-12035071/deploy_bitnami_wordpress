@@ -1,22 +1,23 @@
 name: Pull latest changes to main branch
 
 on:
-  pull_request:
-    types: [closed]
+  pull_request_review:
+    types: [submitted]
     branches: [main]
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
+
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v0.1.8
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          whoami
-          ls -al
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            whoami
+            ls -al
