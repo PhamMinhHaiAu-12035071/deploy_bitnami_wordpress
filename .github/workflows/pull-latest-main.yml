@@ -1,14 +1,14 @@
 name: Pull latest changes to main branch
 
 on:
-  pull_request_review:
+  pull_request:
     types: [closed]
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-
   build:
-    name: Build
+    if: "github.event.pull_request.merged == true"
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using password
@@ -23,3 +23,4 @@ jobs:
             cd "/bitnami/wordpress/deploy_bitnami_wordpress"
             ls -la
             git pull --ff-only
+            git status
