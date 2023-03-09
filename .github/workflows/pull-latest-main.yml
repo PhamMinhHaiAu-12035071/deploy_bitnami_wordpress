@@ -2,22 +2,21 @@ name: Pull latest changes to main branch
 
 on:
   pull_request:
-    types: [merged]
+    types: [closed]
     branches: [main]
 
 jobs:
-  pull-latest-main:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v2
-        with:
-          ref: main
-      - name: Pull latest changes
-        run: git pull origin main
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git commit -am "Pull latest changes"
-          git push
+      name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          whoami
+          ls -al
