@@ -19,5 +19,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /bitnami/wordpress/deploy_bitnami_wordpress
+            ls -la
+            cd "/bitnami/wordpress/deploy_bitnami_wordpress"
+            ls -la
             git pull --ff-only
