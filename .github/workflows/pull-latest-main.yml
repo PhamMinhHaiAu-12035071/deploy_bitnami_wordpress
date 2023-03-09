@@ -2,7 +2,7 @@ name: Pull latest changes to main branch
 
 on:
   pull_request_review:
-    types: [submitted]
+    types: [closed]
     branches: [main]
 
 jobs:
